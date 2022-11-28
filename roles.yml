@@ -1,0 +1,9 @@
+---
+- hosts: webservers #this line refers to /etc/ansible/hosts to check "webservers"
+  
+  roles:
+    - chrony
+    - httpd 
+    #- tomcat 
+...     
+ 

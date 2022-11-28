@@ -1,0 +1,13 @@
+---
+# tasks file for chrony
+#
+- name: install the chronyd
+  ansible.builtin.yum:
+    name: chrony
+    state: installed
+- name: start and enable the chronyd service
+  ansible.builtin.service:
+    name: chronyd
+    state: started
+    enabled: yes
+...
