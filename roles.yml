@@ -2,8 +2,13 @@
 - hosts: webservers #this line refers to /etc/ansible/hosts to check "webservers"
   
   roles:
-    - chrony
-    - httpd 
+    #- chrony
+   #- role: redhat_httpd
+     #when: ansible_os_family == "RedHat"
+   #- role: ubuntu_httpd
+     #when: ansible_os_family == "Debian"
+   - role: nginxinc.nginx
+     when: ansible_os_family == "RedHat"
     #- tomcat 
 ...     
  

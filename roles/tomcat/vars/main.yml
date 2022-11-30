@@ -1,0 +1,5 @@
+---
+# vars file for tomcat
+ansible_become_pass: jenkins
+
+...
