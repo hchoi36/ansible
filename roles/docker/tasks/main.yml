@@ -1,2 +1,23 @@
 ---
 # tasks file for docker
+
+#- name: pull an image
+  #docker_image:
+    #name: pacur/centos-7
+    #source: pull
+  #vars:  
+    #ansible_python_interpreter: /usr/bin/python3
+
+- name: build our image
+  docker_image:
+    build:
+      path: /home/vagrant/ansible-project/roles/docker/files/Dockerfile
+    name: test
+    tag: v1
+    source: build
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  notify: 
+  - create a container from our image
+...
+

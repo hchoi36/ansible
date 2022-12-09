@@ -1,2 +1,7 @@
 ---
 # handlers file for docker
+- name: create a container from our image
+  docker_container:
+    name: docker_test
+    image: test:v1
+...
