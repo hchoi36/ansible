@@ -1,23 +1,25 @@
 ---
-# tasks file for docker
-
-#- name: pull an image
-  #docker_image:
-    #name: pacur/centos-7
-    #source: pull
-  #vars:  
-    #ansible_python_interpreter: /usr/bin/python3
-
-- name: build our image
+- name: create build directory
+  file:
+    path: /root/demo-dockerfile
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+- name: copy Dockerfile
+  copy:
+    src: ./Dockerfile
+    dest: /root/demo-dockerfile/Dockerfile
+    owner: root
+    group: root
+    mode: '0644'
+- name: build container image
   docker_image:
+    name: tomcat:v1
     build:
-      path: /home/vagrant/ansible-project/roles/docker/files/Dockerfile
-    name: test
-    tag: v1
-    source: build
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
-  notify: 
-  - create a container from our image
-...
+      path: /root/demo-dockerfile
+    state: present
+  notify:
+  - create a container from image 
 
+...

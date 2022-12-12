@@ -1,0 +1,35 @@
+---
+# tasks file for docker
+
+- name: pull an image
+  docker_container:
+    name: "centos"
+    image: "centos:latest"
+    state: started
+  vars:  
+    ansible_python_interpreter: /bin/python3
+
+- name: add image to Ansible Hosts
+  add_host:
+    name: "centos"
+    ansible_connection: docker
+    ansible_ssh_user: root
+  vars:
+    ansible_python_interpreter: /bin/python3
+
+- name: build our image
+  docker_image:
+    #docker_host: tcp://192.168.2.40:4243
+    #api_version: "1.41"
+    build:
+      path: /home/vagrant/ansible-project/roles/docker/files/Dockerfile
+    name: test
+    tag: v1
+    source: build
+  vars:
+    ansible_python_interpreter: /bin/python2
+    #ansible_docker_host: tcp://192.168.2.40:4243
+  notify: 
+  - create a container from our image
+...
+
