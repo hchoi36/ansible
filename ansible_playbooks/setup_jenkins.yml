@@ -1,0 +1,32 @@
+---
+- hosts: webservers
+  become: true
+
+  vars:
+    ansible_become_pass: jenkins
+
+  tasks:
+    - name: install java 11
+      ansible.builtin.yum:
+        name: java-11-openjdk
+        state: installed
+    - name: download jenkins repo
+      get_url:
+        url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+        dest: /etc/yum.repos.d/jenkins.repo
+        validate_certs: false
+    - name: Import jenkins key
+      ansible.builtin.rpm_key:
+        key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+        state: present
+        validate_certs: false
+    - name: download jenkins
+      ansible.builtin.yum:
+        name: jenkins
+        state: installed
+    - name: start and enable jenkins
+      ansible.builtin.service:
+        name: jenkins
+        state: started
+        enabled: yes
+...
